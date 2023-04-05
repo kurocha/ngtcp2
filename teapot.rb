@@ -41,13 +41,20 @@ define_target "ngtcp2" do |target|
 	end
 end
 
-define_configuration "ngtcp2" do |configuration|
+define_configuration "development" do |configuration|
 	configuration[:source] = "https://github.com/kurocha/"
+	
+	configuration.import "ngtcp2"
 	
 	configuration.require "platforms"
 	
 	configuration.require "build-make"
 	configuration.require "build-cmake"
+	
+end
+
+define_configuration "ngtcp2" do |configuration|
+	configuration.public!
 	
 	configuration.require "picotls"
 end
