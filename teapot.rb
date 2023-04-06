@@ -20,20 +20,12 @@ define_target "ngtcp2" do |target|
 			cache_prefix / "lib/libngtcp2_crypto_picotls.a",
 		]
 		
-		picotls_path = environment[:picotls_path]
-		
-		picotls_libraries = [
-			"-lssl", "-lcrypto",
-			environment[:picotls_prefix] / "lib/libpicotls-openssl.a",
-			environment[:picotls_prefix] / "lib/libpicotls-core.a",
-		]
-		
 		cmake source: source_files, install_prefix: cache_prefix, arguments: [
 			"-DENABLE_SHARED_LIB=OFF",
 			"-DENABLE_OPENSSL=OFF",
 			"-DENABLE_PICOTLS=ON",
-			"-DPICOTLS_INCLUDE_DIR=#{environment[:picotls_prefix] / 'include'}",
-			"-DPICOTLS_LIBRARIES=#{picotls_libraries.join(';')}",
+			"-DPICOTLS_INCLUDE_DIR=#{environment[:header_search_paths].join(';')}",
+			"-DPICOTLS_LIBRARIES=#{environment[:linkflags].join(';')}",
 		], package_files: package_files
 		
 		append linkflags package_files
@@ -50,7 +42,6 @@ define_configuration "development" do |configuration|
 	
 	configuration.require "build-make"
 	configuration.require "build-cmake"
-	
 end
 
 define_configuration "ngtcp2" do |configuration|
