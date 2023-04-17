@@ -39,13 +39,13 @@ define_configuration "development" do |configuration|
 	configuration.import "ngtcp2"
 	
 	configuration.require "platforms"
-	
-	configuration.require "build-make"
-	configuration.require "build-cmake"
 end
 
 define_configuration "ngtcp2" do |configuration|
 	configuration.public!
+	
+	configuration.require "build-make"
+	configuration.require "build-cmake"
 	
 	configuration.require "picotls"
 end
